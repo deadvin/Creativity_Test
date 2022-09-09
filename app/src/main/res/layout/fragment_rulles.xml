@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width = "fill_parent"
+    android:layout_height = "fill_parent"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:padding="4dp"
+    android:textAllCaps="false"
+    android:background="@drawable/back"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="Creativity Test"
+        android:textColor="@color/white"
+        android:id="@+id/h1"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:requiresFadingEdge="vertical"
+        android:layout_alignParentLeft="true"
+        android:paddingRight="5dp"
+        android:layout_below="@+id/h1"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingRight="5dp"
+            android:orientation="vertical" >
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="20dp"
+                android:text="Remote Associates Test"
+                android:textColor="@color/white"
+                android:id="@+id/h0"
+                android:gravity="center"
+                android:layout_below="@+id/h1"
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:layout_marginTop="10dp"
+                android:text="The Remote Associates Test , created by Professor Sarnoff Mednick, is a test used to determine a human's creative potential.  Mednick found a connection between associative memory and human's creativity.  Each task consists of three common stimulus words that appear to be unrelated. you must think of a word that can be associated with all of them. Here are two examples:"
+                android:textColor="@color/white"
+                android:id="@+id/h2"
+                android:gravity="center"
+                android:layout_below="@+id/h1"
+                android:layout_centerHorizontal="true" />
+
+
+
+
+            <RelativeLayout
+                android:layout_width = "match_parent"
+                android:layout_height = "140dp"
+                android:padding="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:layout_centerVertical="true"
+                    android:textColor="@color/white"
+                    android:text="Cross"
+                    android:id="@+id/h5"
+                    />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    ads:srcCompat="@drawable/arr"
+                    android:layout_marginLeft="7dp"
+                    android:id="@+id/imageView88"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/h55"
+                    android:layout_toEndOf="@+id/h55" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:textColor="@color/white"
+                    android:text="Raincoat"
+                    android:id="@+id/p11"
+                    android:layout_marginLeft="5dp"
+                    android:layout_alignBaseline="@+id/h55"
+                    android:layout_alignBottom="@+id/h55"
+                    android:layout_toRightOf="@+id/imageView88"
+                    android:layout_toEndOf="@+id/imageView88" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:textColor="@color/white"
+                    android:text="Rain forest"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/p55"
+                    android:layout_below="@+id/p11"
+                    android:layout_toRightOf="@+id/imageView88"
+                    android:layout_toEndOf="@+id/imageView88" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:textColor="#fff"
+                    android:text="Rainbow"
+                    android:id="@+id/p44"
+                    android:layout_marginLeft="5dp"
+                    android:layout_above="@+id/p11"
+                    android:layout_toRightOf="@+id/imageView88"
+                    android:layout_toEndOf="@+id/imageView88" />
+
+
+
+
+                <TextView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/center" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:textColor="@color/white"
+                    android:text="Rain"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/h55"
+                    android:layout_alignBaseline="@+id/center"
+                    android:layout_alignBottom="@+id/center"
+                    android:layout_toRightOf="@+id/center"
+                    android:layout_toEndOf="@+id/center" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    ads:srcCompat="@drawable/arr"
+                    android:layout_marginLeft="7dp"
+                    android:id="@+id/imageView8"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@+id/h5"
+                    android:layout_toEndOf="@+id/h5" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:textColor="@color/white"
+                    android:text="Crossbow"
+                    android:id="@+id/p1"
+                    android:layout_marginLeft="5dp"
+                    android:layout_alignBaseline="@+id/h5"
+                    android:layout_alignBottom="@+id/h5"
+                    android:layout_toRightOf="@+id/imageView8"
+                    android:layout_toEndOf="@+id/imageView8" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:textColor="@color/white"
+                    android:text="Crossfire"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/p5"
+                    android:layout_below="@+id/p1"
+                    android:layout_toRightOf="@+id/imageView8"
+                    android:layout_toEndOf="@+id/imageView8" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11dp"
+                    android:textColor="@color/white"
+                    android:text="Crossword"
+                    android:id="@+id/p4"
+                    android:layout_marginLeft="5dp"
+                    android:layout_above="@+id/p1"
+                    android:layout_toRightOf="@+id/imageView8"
+                    android:layout_toEndOf="@+id/imageView8" />
+
+
+
+
+
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="13dp"
+                android:layout_marginTop="10dp"
+                android:text="You can test your creativity thinking with 200 problems with increasing difficulty. To solve them you need good knowledge in English language. When typing the correct answer, the application will indicate it. After each task you will see what percent of the participants solved it and their average time. Enjoy! "
+                android:textColor="@color/white"
+                android:id="@+id/h3"
+                android:gravity="center"
+                android:layout_below="@+id/h1"
+                android:layout_centerHorizontal="true" />
+
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

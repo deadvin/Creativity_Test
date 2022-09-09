@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="232dp"
+    android:paddingLeft="33dp"
+    android:paddingRight="33dp"
+    android:background="@drawable/box"
+    android:paddingBottom="0dp"
+    android:paddingTop="0dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    >
+
+
+    <Button
+        android:text="Close"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:id="@+id/cancel"
+        android:textColor="#FFF"
+        android:layout_marginBottom="35dp"
+        android:background="@drawable/btn_xml"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:text="You have completed all levels of the game. We are currently working on adding some more. See you soon!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="16dp"
+        android:translationY="-35dp"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

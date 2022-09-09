@@ -1,0 +1,57 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="232dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:background="@drawable/alert"
+    android:padding="10dp"
+
+
+    >
+
+
+    <Button
+        android:text="Close"
+        android:layout_width="140dp"
+        android:layout_height="35dp"
+        android:id="@+id/cancel"
+        android:textColor="#FFF"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_xml"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <TextView
+        android:text="Thank you for the purchase!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        android:gravity="center"
+        android:textSize="16dp"
+        android:textColor="@android:color/white"
+        android:layout_above="@+id/cancel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="61dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Thank you for your purchase!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/title2"
+        android:gravity="center"
+        android:textSize="15dp"
+        android:layout_above="@+id/cancel"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+
+</RelativeLayout>
