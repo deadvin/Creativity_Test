@@ -39,12 +39,8 @@ public class MainActivity extends AppCompatActivity {
     MediaPlayer mediaPlayer;
     int appId;
 
-    SharedPreferences.Editor editor;
     boolean premium;
-    boolean opening;
     int level;
-    SharedPreferences sp;
-    boolean continueMusic = true;
     boolean musicon = true;
 
 
