@@ -24,6 +24,8 @@
         android:layout_marginLeft="-10dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/btn_xml"
+        android:fontFamily="@font/aviano"
+        app:fontFamily="@font/aviano"
         android:text="Next Task"
         android:textColor="#FFF" />
 
@@ -36,11 +38,12 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:textColor="@android:color/white"
+        android:fontFamily="@font/aviano"
+        app:fontFamily="@font/aviano"
         android:gravity="center"
         android:text="Task Done!"
-        android:textSize="19dp"
-        />
+        android:textColor="@android:color/white"
+        android:textSize="19dp" />
 
     <ImageView
         android:id="@+id/imageView3"
@@ -67,6 +70,8 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="67dp"
+        android:fontFamily="@font/aviano"
+        app:fontFamily="@font/aviano"
         android:gravity="center"
         android:text="Solved by 67%"
         android:textColor="@android:color/white"
@@ -84,6 +89,8 @@
         android:layout_marginRight="-31dp"
         android:layout_toStartOf="@+id/imageView4"
         android:layout_toLeftOf="@+id/imageView4"
+        android:fontFamily="@font/aviano"
+        app:fontFamily="@font/aviano"
         android:gravity="center"
         android:text="Your time : 25 sec"
         android:textColor="@android:color/white"
@@ -98,7 +105,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:translationX="-20dp"
-
         android:padding="1dp"
         android:src="@drawable/red" />
 
@@ -116,13 +122,12 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="-2dp"
         android:layout_marginRight="-2dp"
+        android:fontFamily="@font/aviano"
+        app:fontFamily="@font/aviano"
         android:gravity="center"
         android:text="Avarage time : 20 sec"
         android:textColor="@android:color/white"
         android:textSize="18dp" />
-
-
-
 
 </RelativeLayout>
 

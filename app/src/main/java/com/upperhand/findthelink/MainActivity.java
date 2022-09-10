@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             Utils.setSharedPref("id",ran, context);
             appId = ran;
         }
+        Utils.loadTasks();
 
         if(musicon) {
             btnMusic.setImageResource(R.drawable.music_btn_on);

@@ -14,13 +14,13 @@ public class Task {
     public Task(String hint1, String hint2, String hint3, String answer , String dif, int time , int solved)
 
     {
-        hint1 = hint1;
-        hint2 = hint2;
-        hint3 = hint3;
-        answer = answer;
-        time = time;
-        dif = dif;
-        solved = solved;
+        this.hint1 = hint1;
+        this.hint2 = hint2;
+        this.hint3 = hint3;
+        this.answer = answer;
+        this.time = time;
+        this.dif = dif;
+        this.solved = solved;
     }
 
     public String getHint1() {

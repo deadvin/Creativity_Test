@@ -108,57 +108,7 @@ public final class Utils {
         return preferences.getString(tag, defaultVal);
     }
 
-    public static String getTimeDifference(String time){
-
-        try {
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT+3"));
-            date = sdf.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Date today = new Date();
-        long diff = today.getTime() - date.getTime();
-        int hours = (int) (diff / 3600000);
-        int mins = (int) (diff / 60000 % 60);
-        String min = "" + mins;
-
-        if (mins < 10) {
-            min = "0" + mins;
-        }
-
-        return hours + ":" + min + " ago";
-    }
-
-    public static String getTimeDifferenceDays(String time){
-
-        try {
-            sdf.setTimeZone(TimeZone.getTimeZone("GMT+3"));
-            date = sdf.parse(time);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Date today = new Date();
-        long diff =  today.getTime() - date.getTime();
-
-        int days = (int) (diff / 86400000);
-        int hours = (int) (diff / (3600000));
-        int minutes = (int) (diff / 60000 % 60);
-        String min = ""+ minutes;
-
-        if(minutes < 10){
-            min = "0" + minutes;
-        }
-
-        if(days < 2) {
-            return "announced " + hours + ":" + min + " ago";
-        }else{
-            return "announced " + days + " days ago";
-        }
-    }
-
-    public void loadTasks (){
+    public static void loadTasks (){
         tasks.add(new Task("cane", "daddy", "plum", "sugar", "Very Easy", 6, 97));
         tasks.add(new Task("dew", "comb", "bee", "honey", "Very Easy", 6, 97));
         tasks.add(new Task("night", "wrist", "stop", "watch", "Very Easy", 6, 96));
