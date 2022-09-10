@@ -10,13 +10,14 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.upperhand.findthelink.objects.Utils;
 
 import java.util.Random;
 
@@ -38,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
     Context context;
     MediaPlayer mediaPlayer;
     int appId;
-
+    boolean isFragmentTop;
     boolean premium;
     int level;
     boolean musicon = true;
-
 
 
     @SuppressLint("ClickableViewAccessibility")
@@ -105,10 +105,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.fadein, R.anim.fadeout);
                 transaction.show(gameFragment);
                 transaction.hide(rullesFragment);
                 transaction.hide(testsFragment);
                 transaction.commit();
+                isFragmentTop = true;
             }
         });
 
@@ -133,27 +135,27 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.fadein, R.anim.fadeout);
                 transaction.hide(gameFragment);
                 transaction.hide(rullesFragment);
                 transaction.show(testsFragment);
                 transaction.commit();
+                isFragmentTop = true;
             }
         });
-
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 transaction = fragmentManager.beginTransaction();
+                transaction.setCustomAnimations(R.anim.fadein, R.anim.fadeout);
                 transaction.hide(gameFragment);
                 transaction.show(rullesFragment);
                 transaction.hide(testsFragment);
                 transaction.commit();
+                isFragmentTop = true;
             }
         });
-
-
-
 
         if (Build.VERSION.SDK_INT >= 21) {
             getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.v_dark));
@@ -164,20 +166,22 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
 
-        transaction = fragmentManager.beginTransaction();
-        transaction.hide(gameFragment);
-        transaction.hide(rullesFragment);
-        transaction.hide(testsFragment);
-        transaction.commit();
-
-//        moveTaskToBack(true);
+        if(isFragmentTop) {
+            isFragmentTop = false;
+            transaction = fragmentManager.beginTransaction();
+            transaction.setCustomAnimations(R.anim.fadein, R.anim.fadeout);
+            transaction.hide(gameFragment);
+            transaction.hide(rullesFragment);
+            transaction.hide(testsFragment);
+            transaction.commit();
+        }else {
+            moveTaskToBack(true);
+        }
     }
 
     @Override
     protected void onPause() {
-
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-
         mediaPlayer.pause();
         super.onPause();
     }
@@ -191,7 +195,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-
         if(musicon) {
             mediaPlayer.start();
         }
