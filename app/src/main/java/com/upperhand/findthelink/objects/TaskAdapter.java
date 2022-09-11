@@ -13,6 +13,10 @@ import com.upperhand.findthelink.R;
 import java.util.ArrayList;
 
 public class TaskAdapter extends ArrayAdapter<Task> {
+
+
+    String unicode = "\u2022";
+
     
     public TaskAdapter(Activity context, ArrayList<Task> desserts) {
         super(context, 0, desserts);
@@ -39,7 +43,15 @@ public class TaskAdapter extends ArrayAdapter<Task> {
         hint3.setText(curTask.getHint3());
 
         TextView answer =  listItemView.findViewById(R.id.answer);
-        answer.setText(curTask.getAnswer());
+        answer.setText("\u2022" + "reveal" + "\u2022");
+
+        answer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                answer.setText(curTask.getAnswer());
+            }
+        });
 
         return listItemView;
     }

@@ -27,7 +27,8 @@ public final class Utils {
     private static SharedPreferences.Editor editor;
     private static SharedPreferences preferences;
     private static Dialog customDialog;
-    private static ArrayList<Task> tasks = new ArrayList<>();
+    private static final ArrayList<Task> tasks = new ArrayList<>();
+
 
     public static void makeToast(String text, Context context){
 
@@ -44,10 +45,10 @@ public final class Utils {
         customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         customDialog.setContentView(resource);
-        customDialog.setCancelable(false);
+        customDialog.setCancelable(true);
         Window window = customDialog.getWindow();
         window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setGravity(Gravity.CENTER);
+        window.setGravity(Gravity.BOTTOM);
         customDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
 
     }
@@ -227,7 +228,7 @@ public final class Utils {
         tasks.add(new Task("zone", "still", "noise", "quiet", "Hard", 22, 40));
         tasks.add(new Task("cloth", "sad", "out", "sack", "Hard", 22, 41));
         tasks.add(new Task("tank", "hill", "secret", "top", "Hard", 28, 38));
-        tasks.add(new Task("health ", "taker", "less", "care", "Hard", 20, 45));
+        tasks.add(new Task("health", "taker", "less", "care", "Hard", 20, 45));
         tasks.add(new Task("lift", "card", "mask", "face", "Hard", 30, 33));
         tasks.add(new Task("force", "line", "mail", "air", "Hard", 27, 31));
         tasks.add(new Task("guy", "rain", "down", "fall", "Hard", 24, 41));

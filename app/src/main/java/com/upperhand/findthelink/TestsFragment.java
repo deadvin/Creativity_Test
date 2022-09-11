@@ -50,6 +50,7 @@ public class TestsFragment extends Fragment {
     public void reset() {
         level = Utils.getSharedPref("level", 0, context);
         int donTasksCount = level;
+        tasks.clear();
         for (int i = 0; i < donTasksCount; i++) {
             tasks.add(Utils.getTasks().get(i));
         }

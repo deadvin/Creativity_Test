@@ -1,0 +1,12 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" android:opacity="opaque">
+  <item android:drawable="@drawable/back"/>
+
+  <item
+      android:width="125dp"
+      android:height="160dp"
+      android:drawable="@drawable/blub"
+      android:layout_marginTop="200dp"
+      android:gravity="center"
+      />
+
+</layer-list>

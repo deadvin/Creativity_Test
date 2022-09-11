@@ -11,9 +11,7 @@ public class Task {
     private int solved;
     private String dif;
 
-    public Task(String hint1, String hint2, String hint3, String answer , String dif, int time , int solved)
-
-    {
+    public Task(String hint1, String hint2, String hint3, String answer , String dif, int time , int solved) {
         this.hint1 = hint1;
         this.hint2 = hint2;
         this.hint3 = hint3;

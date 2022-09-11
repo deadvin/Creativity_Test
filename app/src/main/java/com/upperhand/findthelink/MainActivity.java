@@ -13,6 +13,7 @@ import android.annotation.SuppressLint;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -53,7 +54,11 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setContentView(R.layout.activity_main);
 
-        Utils.loadTasks();
+        RelativeLayout relativeLayoutMain = (RelativeLayout) findViewById(R.id.activity_start);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(1000);
+        alphaAnimation.setFillAfter(true);
+        relativeLayoutMain.startAnimation(alphaAnimation);
 
         context = this;
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
@@ -65,6 +70,27 @@ public class MainActivity extends AppCompatActivity {
         btnMusic = findViewById(R.id.btnMusic);
         btnTests = findViewById(R.id.btnTests);
         btnInfo = findViewById(R.id.btnInfo);
+
+        level = Utils.getSharedPref("level" , 0, context);
+        premium = Utils.getSharedPref("premium", false, context);
+        musicon =  Utils.getSharedPref("music", true, context);
+
+        Utils.loadTasks();
+        tvTasksSolved.setText(level+"/200");
+
+        appId = Utils.getSharedPref("id", 0, context);
+        if(appId == 0){
+            Random r = new Random();
+            int ran = r.nextInt(10000000) + 1;
+            Utils.setSharedPref("id",ran, context);
+            appId = ran;
+        }
+
+        if(musicon) {
+            btnMusic.setImageResource(R.drawable.music_btn_on);
+        }else {
+            btnMusic.setImageResource(R.drawable.music_btn_off);
+        }
 
         rullesFragment = new RullesFragment();
         testsFragment = new TestsFragment();
@@ -82,27 +108,6 @@ public class MainActivity extends AppCompatActivity {
         transaction.hide(gameFragment);
         transaction.commit();
 
-        level = Utils.getSharedPref("level" , 0, context);
-        premium = Utils.getSharedPref("premium", false, context);
-        musicon =  Utils.getSharedPref("music", true, context);
-
-        tvTasksSolved.setText(level+"/200");
-
-        appId = Utils.getSharedPref("id", 0, context);
-        if(appId == 0){
-            Random r = new Random();
-            int ran = r.nextInt(10000000) + 1;
-            Utils.setSharedPref("id",ran, context);
-            appId = ran;
-        }
-
-
-        if(musicon) {
-            btnMusic.setImageResource(R.drawable.music_btn_on);
-        }else {
-            btnMusic.setImageResource(R.drawable.music_btn_off);
-        }
-
 
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                 transaction.commit();
                 isFragmentTop = true;
 
-                gameFragment.start();
+                gameFragment.loadTask();
             }
         });
 
