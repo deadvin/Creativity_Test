@@ -40,6 +40,7 @@ import retrofit2.Response;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
+
 public class GameFragment extends Fragment {
 
     
@@ -281,6 +282,7 @@ public class GameFragment extends Fragment {
 
         if(!isGaveUp){
             time_u.setText("Your time : " + time + " sec");
+            title.setText(Utils.getTasks().get(curlevel).getAnswer());
         }else{
             title.setText(Utils.getTasks().get(curlevel).getAnswer());
             time_u.setVisibility(View.INVISIBLE);
