@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setContentView(R.layout.activity_main);
 
+        Utils.loadTasks();
+
         context = this;
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
         tvTitle =findViewById(R.id.tvTitle);
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             Utils.setSharedPref("id",ran, context);
             appId = ran;
         }
-        Utils.loadTasks();
+
 
         if(musicon) {
             btnMusic.setImageResource(R.drawable.music_btn_on);
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 transaction.hide(testsFragment);
                 transaction.commit();
                 isFragmentTop = true;
+
+                gameFragment.start();
             }
         });
 
@@ -135,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
         btnTests.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                testsFragment.reset();
                 transaction = fragmentManager.beginTransaction();
                 transaction.setCustomAnimations(R.anim.fadein, R.anim.fadeout);
                 transaction.hide(gameFragment);
@@ -175,6 +180,9 @@ public class MainActivity extends AppCompatActivity {
             transaction.hide(rullesFragment);
             transaction.hide(testsFragment);
             transaction.commit();
+
+            level = Utils.getSharedPref("level" , 0, context);
+            tvTasksSolved.setText(level+"/200");
         }else {
             moveTaskToBack(true);
         }

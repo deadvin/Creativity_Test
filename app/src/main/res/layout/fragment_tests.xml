@@ -34,16 +34,93 @@
         android:layout_centerHorizontal="true"
         android:id="@+id/imageView" />
 
+
+    <LinearLayout
+        android:id="@+id/linearlayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:minHeight="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/imageView"
+        android:orientation="horizontal"
+        android:weightSum="4"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/hint1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:fontFamily="@font/aviano"
+            app:fontFamily="@font/aviano"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="10dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:autoSizeStepGranularity="1dp"
+            android:text="hint"/>
+
+        <TextView
+            android:id="@+id/hint2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="10dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:autoSizeStepGranularity="1dp"
+            android:fontFamily="@font/aviano"
+            app:fontFamily="@font/aviano"
+            android:layout_weight="1"
+            android:text="hint" />
+
+        <TextView
+            android:id="@+id/hint3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="10dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:autoSizeStepGranularity="1dp"
+            android:fontFamily="@font/aviano"
+            app:fontFamily="@font/aviano"
+            android:layout_weight="1"
+            android:text="hint" />
+
+        <TextView
+            android:id="@+id/answer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:layout_marginStart="10dp"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMinTextSize="10dp"
+            android:autoSizeMaxTextSize="15dp"
+            android:autoSizeStepGranularity="1dp"
+            android:fontFamily="@font/aviano"
+            app:fontFamily="@font/aviano"
+            android:layout_weight="1"
+            android:onClick="reveal"
+            android:text="answer" />
+
+    </LinearLayout>
+
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_height="644dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:layout_below="@+id/imageView"
+        android:layout_below="@+id/linearlayout"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="43dp"
-        android:layout_marginBottom="-6dp" />
-
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+       />
 
 </RelativeLayout>

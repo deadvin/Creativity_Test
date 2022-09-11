@@ -12,59 +12,70 @@
 
     <TextView
         android:id="@+id/hint1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:gravity="center"
-        android:layout_weight="0.9"
+        android:layout_weight="0.98"
         android:textColor="#fff"
         android:fontFamily="@font/aviano"
         app:fontFamily="@font/aviano"
-        android:textSize="15dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10dp"
+        android:autoSizeMaxTextSize="15dp"
+        android:autoSizeStepGranularity="1dp"
         android:text="ice"/>
 
     <TextView
         android:id="@+id/hint2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:textColor="#fff"
         android:gravity="center"
-        android:textSize="15dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10dp"
+        android:autoSizeMaxTextSize="15dp"
+        android:autoSizeStepGranularity="1dp"
         android:fontFamily="@font/aviano"
         app:fontFamily="@font/aviano"
-        android:layout_weight="0.9"
+        android:layout_weight="0.98"
         android:text="shate" />
 
     <TextView
         android:id="@+id/hint3"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="#fff"
-        android:textSize="15dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10dp"
+        android:autoSizeMaxTextSize="15dp"
+        android:autoSizeStepGranularity="1dp"
         android:fontFamily="@font/aviano"
         app:fontFamily="@font/aviano"
-        android:layout_weight="0.9"
+        android:layout_weight="0.98"
         android:text="coma" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="4dp"
+        android:layout_width="5dp"
         android:layout_height="match_parent"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
         app:srcCompat="@drawable/separator2" />
 
     <TextView
         android:id="@+id/answer"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="#fff"
-       android:layout_marginStart="10dp"
-        android:textSize="15dp"
+        android:layout_marginStart="10dp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMinTextSize="10dp"
+        android:autoSizeMaxTextSize="15dp"
+        android:autoSizeStepGranularity="1dp"
         android:fontFamily="@font/aviano"
         app:fontFamily="@font/aviano"
-        android:layout_weight="0.9"
+        android:layout_weight="0.98"
         android:onClick="reveal"
         android:text="Reveal" />
 

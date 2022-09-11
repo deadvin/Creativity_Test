@@ -1,6 +1,5 @@
 package com.upperhand.findthelink;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
@@ -10,11 +9,9 @@ import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
@@ -22,14 +19,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.AdError;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.FullScreenContentCallback;
+import com.google.android.gms.ads.LoadAdError;
 import com.google.android.gms.ads.interstitial.InterstitialAd;
-import com.upperhand.findthelink.objects.Task;
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.upperhand.findthelink.objects.Utils;
-import java.util.ArrayList;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
 
@@ -40,9 +38,7 @@ public class GameFragment extends Fragment {
     EditText editText;
     Button btnGiveUp;
     boolean isPremium;
-    
     boolean is_solve;
-    long time_start;
     Animation fadein;
     Animation fadeout;
     TextView tvTime;
@@ -54,15 +50,13 @@ public class GameFragment extends Fragment {
     int curlevel;
     Keyboard mKeyboard;
     KeyboardView mKeyboardView;
-
-    boolean opening;
+    String TAG = "asd";
+    boolean isGaveUp;
     int time;
-
     InterstitialAd mInterstitialAd;
-    Handler handler = new Handler();
     long startTime = 0;
+    Handler handler = new Handler();
     Handler timerHandler = new Handler();
-    final ArrayList<Task> tasks = new ArrayList<>();
     Runnable timerRunnable;
 
 
@@ -101,11 +95,6 @@ public class GameFragment extends Fragment {
         disableSoftInputFromAppearing ();
 
 
-//        sp = getApplicationContext().getSharedPreferences("time1", 0);
-//        time_start = sp.getLong("time1", 0);
-//        if (time_start == 0) {
-//            time_start = TimeUnit.MILLISECONDS.toSeconds(SystemClock.elapsedRealtime());
-//        }
 
         editText.setInputType(InputType.TYPE_NULL);
 
@@ -116,13 +105,12 @@ public class GameFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if(curlevel < 201) {
+                if(curlevel < 201 && !isGaveUp) {
                     String text = editText.getText().toString();
-                    if (text.equalsIgnoreCase(tasks.get(curlevel).getAnswer())) {
+                    if (text.equalsIgnoreCase(Utils.getTasks().get(curlevel).getAnswer())) {
                         Utils.makeToast("Correct!", context);
-                        timerHandler.removeCallbacks(timerRunnable);
+                        is_solve = true;
                         correct();
-
                     }
                 }
             }
@@ -135,11 +123,9 @@ public class GameFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if(!opening) {
-                    opening = true;
-                    is_solve = false;
-                    editText.setText(tasks.get(curlevel).getAnswer());
-                }
+                isGaveUp = true;
+                editText.setText(Utils.getTasks().get(curlevel).getAnswer());
+                correct();
             }
         });
 
@@ -157,14 +143,84 @@ public class GameFragment extends Fragment {
             }
         };
 
-        loadTask();
-
         return view;
     }
 
+    public void start(){
+        resetTimer();
+        loadAd();
+        loadTask();
+    }
 
+    public void loadAd(){
+
+        AdRequest adRequest = new AdRequest.Builder().build();
+        InterstitialAd.load(context,"ca-app-pub-3940256099942544/1033173712", adRequest,
+                new InterstitialAdLoadCallback() {
+                    @Override
+                    public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
+                        mInterstitialAd = interstitialAd;
+
+                        mInterstitialAd.setFullScreenContentCallback(new FullScreenContentCallback(){
+
+                            @Override
+                            public void onAdClicked() {
+                                // Called when a click is recorded for an ad.
+                            }
+
+                            @Override
+                            public void onAdDismissedFullScreenContent() {
+                                Utils.getAlertDialogue().dismiss();
+                                loadAd();
+                                loadTask();
+                                resetTimer();
+
+                                mInterstitialAd = null;
+                            }
+
+                            @Override
+                            public void onAdFailedToShowFullScreenContent(AdError adError) {
+                                // Called when ad fails to show.
+                                mInterstitialAd = null;
+                            }
+
+                            @Override
+                            public void onAdImpression() {
+                                // Called when an impression is recorded for an ad.
+                            }
+
+                            @Override
+                            public void onAdShowedFullScreenContent() {
+                                // Called when ad is shown.
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onAdFailedToLoad(@NonNull LoadAdError loadAdError) {
+                        mInterstitialAd = null;
+                    }
+                });
+    }
+
+    public void showAd(){
+
+        if (mInterstitialAd != null) {
+            mInterstitialAd.show(getActivity());
+        } else {
+            Log.d("TAG", "The interstitial ad wasn't ready yet.");
+        }
+
+    }
+
+    public void resetTimer(){
+        startTime = System.currentTimeMillis();
+        timerHandler.postDelayed(timerRunnable, 1000);
+    }
 
     public void loadTask (){
+
+        tvTime.setText(String.format("%d:%02d", 0, 0));
 
         if(curlevel==200) {
 
@@ -193,121 +249,71 @@ public class GameFragment extends Fragment {
             tvHint_1.setText(Utils.getTasks().get(curlevel).getHint1());
             tvHint_2.setText(Utils.getTasks().get(curlevel).getHint2());
             tvHint_3.setText(Utils.getTasks().get(curlevel).getHint3());
-
-//            tvHint_1.setGravity(Gravity.CENTER);
-//            tvHint_2.setGravity(Gravity.CENTER);
-//            tvHint_2.setGravity(Gravity.CENTER);
             tvDifficulty.setText(Utils.getTasks().get(curlevel).getDif());
             tvLevel.setText("task " + (curlevel + 1));
-//            is_solve = true;
-//            opening = false;
-            startTime = System.currentTimeMillis();
-            timerHandler.postDelayed(timerRunnable, 0);
             editText.setText("");
+            isGaveUp = false;
         }
     }
 
     public void correct(){
 
-//        MobileAds.initialize(context, "ca-app-pub-1582921325835661~9439420037");
-
-        handler.postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                final Dialog customDialogEnd =  new Dialog(context);
-                customDialogEnd.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                customDialogEnd.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                customDialogEnd.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
-                customDialogEnd.setContentView(R.layout.correct);
-                customDialogEnd.setCancelable(false);
-                Window window = customDialogEnd.getWindow();
-                window.setGravity(Gravity.CENTER);
-
-                TextView title =  customDialogEnd.findViewById(R.id.title);
-                TextView solved =  customDialogEnd.findViewById(R.id.solved);
-                TextView time_u =  customDialogEnd.findViewById(R.id.time_a);
-                TextView time_a =  customDialogEnd.findViewById(R.id.time_u);
-                ImageView arrow =  customDialogEnd.findViewById(R.id.imageView4);
-                ImageView box =  customDialogEnd.findViewById(R.id.imageView3);
-
-                Button next =  customDialogEnd.findViewById(R.id.next);
-                time_u.setVisibility(View.VISIBLE);
-                arrow.setVisibility(View.VISIBLE);
-
-
-
-                time_a.setText("Average time : "+ tasks.get(curlevel).getTime() + " sec");
-                solved.setText("Solved by : "+ tasks.get(curlevel).getSolved() + "%");
-
-                if(is_solve){
-                    box.setImageResource(R.drawable.right);
-                    time_u.setText("Your time : " + time + " sec");
-                    if(time < tasks.get(curlevel).getTime()){
-                        arrow.setImageResource(R.drawable.green);
-                    }else if (time > tasks.get(curlevel).getTime()){
-                        arrow.setImageResource(R.drawable.red);
-                    }else{
-                        arrow.setVisibility(View.GONE);
-                    }
-                }else{
-                    title.setText(tasks.get(curlevel).getAnswer());
-                    box.setImageResource(R.drawable.wrong);
-                    time_u.setVisibility(View.GONE);
-                    arrow.setVisibility(View.GONE);
-                }
-
-                next.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-
-                        curlevel++;
-
-                        if (!isPremium && mInterstitialAd.isLoaded() && curlevel % 3 == 0 && curlevel > 2 ){
-                            mInterstitialAd.setAdListener(new AdListener() {
-                                @Override
-                                public void onAdClosed() {
-                                    super.onAdClosed();
-                                    customDialogEnd.dismiss();
-                                    loadTask();
-                                }
-                            });
-                            mInterstitialAd.show();
-                        }else{
-                            customDialogEnd.dismiss();
-                            loadTask();
-                        }
-                    }
-                });
-
-                customDialogEnd.show();
-
-                if (!premium) {
-                    mInterstitialAd = new InterstitialAd(context);
-                    mInterstitialAd.setAdUnitId("ca-app-pub-1582921325835661/1916153231");
-                    mInterstitialAd.setAdListener(new AdListener() {
-                        @Override
-                        public void onAdLoaded() {
-                            //     Toast.makeText(Game.this,"ad loaded", Toast.LENGTH_LONG).show();
-                        }
-                        @Override
-                        public void onAdClosed() {
-                            requestNewInterstitial();
-                        }
-                    });
-                    requestNewInterstitial();
-                }
-
-            }
-
-        }, 3000);
-
+        timerHandler.removeCallbacks(timerRunnable);
         Utils.setSharedPref("level",curlevel + 1, context);
+
+        Utils.buildAlertDialogue(R.layout.correct, context);
+        TextView title =  Utils.getAlertDialogue().findViewById(R.id.title);
+        TextView solved =  Utils.getAlertDialogue().findViewById(R.id.solved);
+        TextView time_u =  Utils.getAlertDialogue().findViewById(R.id.time_a);
+        TextView time_a =  Utils.getAlertDialogue().findViewById(R.id.time_u);
+        ImageView arrow =  Utils.getAlertDialogue().findViewById(R.id.imageView4);
+        ImageView box =  Utils.getAlertDialogue().findViewById(R.id.imageView3);
+
+        Button next =  Utils.getAlertDialogue().findViewById(R.id.next);
+        time_u.setVisibility(View.VISIBLE);
+        arrow.setVisibility(View.VISIBLE);
+
+        time_a.setText("Average time : "+ Utils.getTasks().get(curlevel).getTime() + " sec");
+        solved.setText("Solved by : "+ Utils.getTasks().get(curlevel).getSolved() + "%");
+
+        if(!isGaveUp){
+            box.setImageResource(R.drawable.right);
+            time_u.setText("Your time : " + time + " sec");
+            if(time < Utils.getTasks().get(curlevel).getTime()){
+                arrow.setImageResource(R.drawable.green);
+            }else if (time > Utils.getTasks().get(curlevel).getTime()){
+                arrow.setImageResource(R.drawable.red);
+            }else{
+                arrow.setVisibility(View.GONE);
+            }
+        }else{
+            title.setText(Utils.getTasks().get(curlevel).getAnswer());
+            box.setImageResource(R.drawable.wrong);
+            time_u.setVisibility(View.GONE);
+            arrow.setVisibility(View.GONE);
+        }
+
+        next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                curlevel++;
+                if (!isPremium && mInterstitialAd != null && curlevel % 3 == 0 && curlevel > 2 ){
+                    showAd();
+                }else{
+                    Utils.getAlertDialogue().dismiss();
+                    resetTimer();
+                    loadTask();
+                }
+            }
+        });
+
+        Utils.getAlertDialogue().show();
+
     }
 
     private final KeyboardView.OnKeyboardActionListener mOnKeyboardActionListener = new KeyboardView.OnKeyboardActionListener() {
         @Override public void onKey(int primaryCode, int[] keyCodes) {
-            if (!opening){
+
                 if (primaryCode == -5) {
                     String str = editText.getText().toString();
                     if (str.length() > 0) {
@@ -318,7 +324,7 @@ public class GameFragment extends Fragment {
                 } else {
                     editText.append(Character.toString((char) primaryCode));
                 }
-            }
+
         }
 
         @Override public void onPress(int arg0) {
@@ -353,5 +359,10 @@ public class GameFragment extends Fragment {
     public void disableSoftInputFromAppearing() {
         editText.setRawInputType(InputType.TYPE_CLASS_TEXT);
         editText.setTextIsSelectable(true);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

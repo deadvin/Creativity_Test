@@ -3,6 +3,7 @@ package com.upperhand.findthelink.objects;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -26,8 +27,6 @@ public final class Utils {
     private static SharedPreferences.Editor editor;
     private static SharedPreferences preferences;
     private static Dialog customDialog;
-    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
-    private static Date date;
     private static ArrayList<Task> tasks = new ArrayList<>();
 
     public static void makeToast(String text, Context context){
@@ -45,26 +44,12 @@ public final class Utils {
         customDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         customDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         customDialog.setContentView(resource);
-        customDialog.setCancelable(true);
+        customDialog.setCancelable(false);
         Window window = customDialog.getWindow();
         window.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setGravity(Gravity.CENTER);
         customDialog.getWindow().getAttributes().windowAnimations = R.style.PauseDialogAnimation;
 
-        Button cancel =  customDialog.findViewById(R.id.tvTitle);
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog.dismiss();
-            }
-        });
-
-        cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                customDialog.dismiss();
-            }
-        });
     }
 
     public static Dialog getAlertDialogue(){
@@ -316,6 +301,8 @@ public final class Utils {
     }
 
     public static ArrayList<Task> getTasks() {
+
+        Log.e("asd" , tasks.get(0).getAnswer());
 
         return tasks;
     }

@@ -25,31 +25,34 @@ public class TestsFragment extends Fragment {
 
     final ArrayList<Task> tasks = new ArrayList<>();
     int level;
+    TaskAdapter adapter;
     Context context;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        context = getActivity();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_tests, container, false);
 
-        context = getActivity();
-        level = Utils.getSharedPref("level", 0, context);
-
-        int donTasksCount = (Utils.getTasks().size() - level);
-        for (int i = 0; i < donTasksCount; i++) {
-            tasks.add(Utils.getTasks().get(i));
-        }
-
-        TaskAdapter adapter = new TaskAdapter((Activity)context, tasks);
-
+        adapter = new TaskAdapter((Activity)context, tasks);
         ListView listView =  view.findViewById(R.id.lv);
         listView.setAdapter(adapter);
 
         return view;
+    }
+
+
+
+    public void reset() {
+        level = Utils.getSharedPref("level", 0, context);
+        int donTasksCount = level;
+        for (int i = 0; i < donTasksCount; i++) {
+            tasks.add(Utils.getTasks().get(i));
+        }
+        adapter.notifyDataSetChanged();
     }
 }
