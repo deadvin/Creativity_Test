@@ -132,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
                 Utils.setSharedPref("music", musicon, context);
                 if(musicon) {
                     mediaPlayer.start();
-
                     btnMusic.setImageResource(R.drawable.music_btn_on);
                 }else {
                     mediaPlayer.pause();

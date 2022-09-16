@@ -76,10 +76,6 @@
         android:fontFamily="@font/aviano"
         app:fontFamily="@font/aviano"
         android:layout_weight="0.98"
-        android:onClick="reveal"
         android:text="Reveal" />
-
-
-
 
 </LinearLayout>
