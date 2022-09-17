@@ -15,11 +15,13 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.upperhand.findthelink.objects.Utils;
 
+import java.io.IOException;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,15 +55,15 @@ public class MainActivity extends AppCompatActivity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         this.setContentView(R.layout.activity_main);
+        getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.v_dark));
 
-        RelativeLayout relativeLayoutMain = (RelativeLayout) findViewById(R.id.activity_start);
+        RelativeLayout relativeLayoutMain = findViewById(R.id.activity_start);
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
         alphaAnimation.setDuration(1000);
         alphaAnimation.setFillAfter(true);
         relativeLayoutMain.startAnimation(alphaAnimation);
 
         context = this;
-        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
         tvTitle =findViewById(R.id.tvTitle);
         tvText = findViewById(R.id.tvText);
         tvStart = findViewById(R.id.tvStart);
@@ -73,18 +75,16 @@ public class MainActivity extends AppCompatActivity {
 
         level = Utils.getSharedPref("level" , 0, context);
         premium = Utils.getSharedPref("premium", false, context);
-        musicon =  Utils.getSharedPref("music", true, context);
+        musicon =  Utils.getSharedPref("music", false, context);
 
         Utils.loadTasks();
-        tvTasksSolved.setText(level+"/200");
+        setAppId();
 
-        appId = Utils.getSharedPref("id", 0, context);
-        if(appId == 0){
-            Random r = new Random();
-            int ran = r.nextInt(10000000) + 1;
-            Utils.setSharedPref("id",ran, context);
-            appId = ran;
-        }
+        tvTasksSolved.setText(level + "/200");
+
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.music);
+        mediaPlayer.setLooping(true);
+
 
         if(musicon) {
             btnMusic.setImageResource(R.drawable.music_btn_on);
@@ -167,11 +167,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.v_dark));
-        }
     }
 
+    private void setAppId(){
+        appId = Utils.getSharedPref("id", 0, context);
+        if(appId == 0){
+            Random r = new Random();
+            int ran = r.nextInt(10000000) + 1;
+            Utils.setSharedPref("id",ran, context);
+            appId = ran;
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -195,7 +201,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
-        mediaPlayer.pause();
+        if(mediaPlayer.isPlaying()) {
+            mediaPlayer.pause();
+        }
         super.onPause();
     }
 

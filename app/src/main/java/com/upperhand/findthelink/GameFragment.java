@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import com.google.android.gms.ads.AdError;
@@ -32,18 +31,14 @@ import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback;
 import com.upperhand.findthelink.objects.RetrofitSingleton;
 import com.upperhand.findthelink.objects.Score;
 import com.upperhand.findthelink.objects.Utils;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-
-
 public class GameFragment extends Fragment {
 
-    
     Context context;
     EditText editText;
     Button btnGiveUp;
@@ -59,16 +54,14 @@ public class GameFragment extends Fragment {
     int curlevel;
     Keyboard mKeyboard;
     KeyboardView mKeyboardView;
-    String TAG = "asd";
     boolean isGaveUp;
     int time;
     InterstitialAd mInterstitialAd;
     long startTime = 0;
-    Handler handler = new Handler();
     Handler timerHandler = new Handler();
     Runnable timerRunnable;
     Call<Score> callPost;
-
+    boolean isKeyboardEnabled;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -157,7 +150,7 @@ public class GameFragment extends Fragment {
     private void loadAd(){
 
         AdRequest adRequest = new AdRequest.Builder().build();
-        InterstitialAd.load(context,"ca-app-pub-3940256099942544/1033173712", adRequest,
+        InterstitialAd.load(context,"ca-app-pub-1582921325835661/1916153231", adRequest,
                 new InterstitialAdLoadCallback() {
                     @Override
                     public void onAdLoaded(@NonNull InterstitialAd interstitialAd) {
@@ -254,7 +247,7 @@ public class GameFragment extends Fragment {
             editText.setText("");
             isGaveUp = false;
             btnGiveUp.setClickable(true);
-            mKeyboardView.setClickable(true);
+            isKeyboardEnabled = true;
             resetTimer();
         }
     }
@@ -262,7 +255,7 @@ public class GameFragment extends Fragment {
     private void correct(){
 
         btnGiveUp.setClickable(false);
-        mKeyboardView.setClickable(false);
+        isKeyboardEnabled = false;
         postScore();
 
         timerHandler.removeCallbacks(timerRunnable);
@@ -326,13 +319,9 @@ public class GameFragment extends Fragment {
         callPost.enqueue(new Callback<Score>() {
             @Override
             public void onResponse(Call<Score> call, Response<Score> response) {
-
             }
             @Override
             public void onFailure(Call<Score> call, Throwable t) {
-                Log.e("see",t.getMessage());
-                Toast.makeText(context, "Problem connecting the server." ,
-                        Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -340,15 +329,17 @@ public class GameFragment extends Fragment {
     private final KeyboardView.OnKeyboardActionListener mOnKeyboardActionListener = new KeyboardView.OnKeyboardActionListener() {
         @Override public void onKey(int primaryCode, int[] keyCodes) {
 
-                if (primaryCode == -5) {
-                    String str = editText.getText().toString();
-                    if (str.length() > 0) {
-                        str = str.substring(0, str.length() - 1);
-                        editText.setText(str);
-                        editText.setSelection(editText.getText().length());
+                if(isKeyboardEnabled) {
+                    if (primaryCode == -5) {
+                        String str = editText.getText().toString();
+                        if (str.length() > 0) {
+                            str = str.substring(0, str.length() - 1);
+                            editText.setText(str);
+                            editText.setSelection(editText.getText().length());
+                        }
+                    } else {
+                        editText.append(Character.toString((char) primaryCode));
                     }
-                } else {
-                    editText.append(Character.toString((char) primaryCode));
                 }
 
         }

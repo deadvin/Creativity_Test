@@ -303,8 +303,6 @@ public final class Utils {
 
     public static ArrayList<Task> getTasks() {
 
-        Log.e("asd" , tasks.get(0).getAnswer());
-
         return tasks;
     }
 

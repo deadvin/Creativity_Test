@@ -15,11 +15,8 @@ import java.util.ArrayList;
 public class TaskAdapter extends ArrayAdapter<Task> {
 
 
-    String unicode = "\u2022";
-
-    
-    public TaskAdapter(Activity context, ArrayList<Task> desserts) {
-        super(context, 0, desserts);
+    public TaskAdapter(Activity context, ArrayList<Task> tasks) {
+        super(context, 0, tasks);
     }
 
     @Override

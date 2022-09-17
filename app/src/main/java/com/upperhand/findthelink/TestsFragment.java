@@ -2,22 +2,15 @@ package com.upperhand.findthelink;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import com.upperhand.findthelink.objects.Task;
 import com.upperhand.findthelink.objects.TaskAdapter;
 import com.upperhand.findthelink.objects.Utils;
-
 import java.util.ArrayList;
 
 
@@ -44,7 +37,6 @@ public class TestsFragment extends Fragment {
 
         return view;
     }
-
 
 
     public void reset() {
